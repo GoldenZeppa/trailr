@@ -15,7 +15,7 @@ const GoogleMap = React.memo(({ children, ...props }) => (
   <Wrapper>
     <GoogleMapReact
       bootstrapURLKeys={{
-        key: process.env.REACT_APP_MAP_KEY,
+        key: '',
       }}
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...props}
