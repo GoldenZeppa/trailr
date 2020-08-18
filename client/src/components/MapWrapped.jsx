@@ -73,7 +73,25 @@ const MapWithASearchBox = React.memo(() => {
         },
       })
       .then(({ data }) => {
-        console.log(data);
+        console.log('*** Restaurants ***', data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
+  const updateBars = (lat, long) => {
+    const latStr = lat.toString();
+    const longStr = long.toString();
+    axios
+      .get('/api/bars', {
+        params: {
+          lat: latStr,
+          lon: longStr,
+        },
+      })
+      .then(({ data }) => {
+        console.log('*** Bars ***', data);
       })
       .catch((err) => {
         console.error(err);
@@ -83,6 +101,7 @@ const MapWithASearchBox = React.memo(() => {
   useEffect(() => {
     updateTrails(100, userLocation.lat, userLocation.lng);
     updateRestaurants(userLocation.lat, userLocation.lng);
+    updateBars(userLocation.lat, userLocation.lng);
     const script = document.createElement('script');
     script.src =
       'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js';
