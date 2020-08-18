@@ -115,6 +115,41 @@ router.get('/users/:id', (req, res) => {
     });
 });
 
+/*
+* Route - Makes GET request to Google Places API for restaurants in user area.
+* Use - Uses axios function to retrieve information on restaurants in users area from API.
+* Inputs - Axios function requires proper headers & params:
+*   {Param} - key - Google Places API key saved in .env file
+*   {Param} - location - Latitude and longitude are deconstructed from request query.
+*                        Must be specified as 'latitude,longitude'.
+*   {Param} - radius - deconstructed from request query.
+*                      Maximum value is 50000 meters (about 31 miles).
+* Returns - an array of objects, each containing restaurant information from API
+*/
+router.get('/restaurants', (req, res) => {
+  const { lat, lon } = req.query;
+  axios({
+    method: 'GET',
+    url: 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?',
+    headers: {
+      'content-type': 'application/json; charset=UTF-8',
+    },
+    params: {
+      key: process.env.GOOGLE_MAPS_API_KEY,
+      location: `${lat},${lon}`,
+      radius: 50000,
+      type: 'restaurant',
+    },
+  })
+    .then((response) => {
+      const restaurantData = response.data.results;
+      res.send(restaurantData);
+    })
+    .catch((err) => {
+      throw err;
+    });
+});
+
 /* POST Request Handlers */
 
 /*

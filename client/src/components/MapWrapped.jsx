@@ -9,6 +9,7 @@ import GoogleMap from './GoogleMap.jsx';
 import SearchBox from './SearchBox.jsx';
 import transparentMarker from '../../assets/imgs/transparentMarker.png';
 import * as trailData from '../data/trail-data.json';
+import * as restaurantData from '../data/restaurant-data.json';
 
 /**
  * MapWithASearchBox is an Google Map with an auto-completing search bar that searches
@@ -61,8 +62,27 @@ const MapWithASearchBox = React.memo(() => {
       });
   };
 
+  const updateRestaurants = (lat, long) => {
+    const latStr = lat.toString();
+    const longStr = long.toString();
+    axios
+      .get('/api/restaurants', {
+        params: {
+          lat: latStr,
+          lon: longStr,
+        },
+      })
+      .then(({ data }) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
   useEffect(() => {
     updateTrails(100, userLocation.lat, userLocation.lng);
+    updateRestaurants(userLocation.lat, userLocation.lng);
     const script = document.createElement('script');
     script.src =
       'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js';
