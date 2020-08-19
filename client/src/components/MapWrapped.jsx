@@ -10,6 +10,7 @@ import SearchBox from './SearchBox.jsx';
 import transparentMarker from '../../assets/imgs/transparentMarker.png';
 import * as trailData from '../data/trail-data.json';
 import * as restaurantData from '../data/restaurant-data.json';
+import * as barData from '../data/bar-data.json';
 
 /**
  * MapWithASearchBox is an Google Map with an auto-completing search bar that searches
@@ -30,6 +31,8 @@ const MapWithASearchBox = React.memo(() => {
   });
   const [selectedTrail, setSelectedTrail] = useState(null);
   const [selectedTrailIndex, setSelectedTrailIndex] = useState(null);
+  const [restaurants, setRestaurants] = useState(restaurantData.results);
+  const [bars, setBars] = useState(barData.results);
 
   const addPlace = (place) => {
     setPlaces(place);
@@ -74,6 +77,9 @@ const MapWithASearchBox = React.memo(() => {
       })
       .then(({ data }) => {
         console.log('*** Restaurants ***', data);
+        if (data && restaurants) {
+          setRestaurants(data);
+        }
       })
       .catch((err) => {
         console.error(err);
@@ -92,6 +98,9 @@ const MapWithASearchBox = React.memo(() => {
       })
       .then(({ data }) => {
         console.log('*** Bars ***', data);
+        if (data && bars) {
+          setBars(data);
+        }
       })
       .catch((err) => {
         console.error(err);
@@ -149,6 +158,14 @@ const MapWithASearchBox = React.memo(() => {
         ) {
           lastSearchedCenter = currentCenter;
           updateTrails(radius, currentCenter.lat, currentCenter.lng);
+        }
+        const foodBeverageRange = 0.4; // Change needed in lat/long degrees to refresh search
+        if (
+          Math.abs(+currentCenter.lat - +lastSearchedCenter.lat) > foodBeverageRange ||
+          Math.abs(+currentCenter.lng - +lastSearchedCenter.lng) > foodBeverageRange
+        ) {
+          updateRestaurants(currentCenter.lat, currentCenter.lng);
+          updateBars(currentCenter.lat, currentCenter.lng);
         }
       });
       setMapInstance(map);
