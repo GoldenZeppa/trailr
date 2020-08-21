@@ -137,8 +137,8 @@ router.get('/restaurants', (req, res) => {
     params: {
       key: process.env.GOOGLE_MAPS_API_KEY,
       location: `${lat},${lon}`,
-      radius: 50000,
       type: 'restaurant',
+      rankby: 'distance',
     },
   })
     .then((response) => {
@@ -172,8 +172,8 @@ router.get('/bars', (req, res) => {
     params: {
       key: process.env.GOOGLE_MAPS_API_KEY,
       location: `${lat},${lon}`,
-      radius: 50000,
       type: 'bar',
+      rankby: 'distance',
     },
   })
     .then((response) => {

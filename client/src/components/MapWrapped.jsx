@@ -159,7 +159,7 @@ const MapWithASearchBox = React.memo(() => {
           lastSearchedCenter = currentCenter;
           updateTrails(radius, currentCenter.lat, currentCenter.lng);
         }
-        const foodBeverageRange = 0.4; // Change needed in lat/long degrees to refresh search
+        const foodBeverageRange = 0.2; // Change needed in lat/long degrees to refresh search
         if (
           Math.abs(+currentCenter.lat - +lastSearchedCenter.lat) > foodBeverageRange ||
           Math.abs(+currentCenter.lng - +lastSearchedCenter.lng) > foodBeverageRange
