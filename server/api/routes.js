@@ -21,6 +21,9 @@ const {
   deletePhoto,
   addFavorite,
   deleteFavorite,
+  addPlantIdInfo,
+  getTrailPlantIdPhoto,
+  getUserPlantIdPhoto,
 } = require('../../database/index.js');
 
 // import GCS functions
@@ -106,7 +109,7 @@ router.get('/users/:id', (req, res) => {
   const { id } = req.params;
   getUser(id)
     .then((success) => {
-      console.log('SUCESSS GETING USER', success)
+      console.log('SUCESSS GETING USER', success);
       res.send(success);
     })
     .catch((error) => {
@@ -205,6 +208,20 @@ router.get('/place/:id', (req, res) => {
     });
 });
 
+router.get('/plantId/trail/:id', (req, res) => {
+  const { id } = req.params;
+  getTrailPlantIdPhoto(id)
+    .then((success) => res.send(success))
+    .catch((err) => res.status(500).send(err));
+});
+
+router.get('/plantId/user/:id', (req, res) => {
+  const { id } = req.params;
+  getUserPlantIdPhoto(id)
+    .then((success) => res.send(success))
+    .catch((err) => res.status(500).send(err));
+});
+
 /* POST Request Handlers */
 
 /*
@@ -295,6 +312,17 @@ router.post('/photos', (req, res) => {
     // Not Authorized
     res.sendStatus(401);
   }
+});
+
+router.post('/plantId', (req, res) => {
+  const { body } = req;
+  addPlantIdInfo(body)
+    .then((success) => {
+      res.status(201).send(success);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
 });
 
 /*
@@ -577,6 +605,24 @@ router.delete('/favorites', (req, res) => {
     // Not Authorized
     res.sendStatus(401);
   }
+});
+
+router.get('/birds/sounds', (req, res) => {
+  const { birdName } = req.query;
+
+  const birdNameForAPI = birdName.replace('-', '');
+
+  axios.get(`http://www.xeno-canto.org/api/2/recordings?query=${birdNameForAPI}`)
+    .then((birdSound) => res.send(birdSound.data.recordings[0].file))
+    .catch((err) => res.status(500).send(err));
+});
+
+router.get('/birds/image', (req, res) => {
+  const { birdName } = req.query;
+
+  axios.get(`https://serpapi.com/search.json?engine=google&q=${birdName}&google_domain=google.com&gl=us&hl=en&tbm=isch&api_key=${process.env.SERPAPI}`)
+    .then((birdImage) => res.send(birdImage.data.images_results[0].original))
+    .catch((err) => res.status(500).send(err));
 });
 
 // export "router" variable to be used in other project files
