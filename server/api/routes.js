@@ -122,8 +122,6 @@ router.get('/users/:id', (req, res) => {
 *   {Param} - key - Google Places API key saved in .env file
 *   {Param} - location - Latitude and longitude are deconstructed from request query.
 *                        Must be specified as 'latitude,longitude'.
-*   {Param} - radius - deconstructed from request query.
-*                      Maximum value is 50000 meters (about 31 miles).
 * Returns - an array of objects, each containing restaurant information from API
 */
 router.get('/restaurants', (req, res) => {
@@ -157,8 +155,6 @@ router.get('/restaurants', (req, res) => {
 *   {Param} - key - Google Places API key saved in .env file
 *   {Param} - location - Latitude and longitude are deconstructed from request query.
 *                        Must be specified as 'latitude,longitude'.
-*   {Param} - radius - deconstructed from request query.
-*                      Maximum value is 50000 meters (about 31 miles).
 * Returns - an array of objects, each containing restaurant information from API
 */
 router.get('/bars', (req, res) => {

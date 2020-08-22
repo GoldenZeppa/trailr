@@ -9,8 +9,6 @@ import GoogleMap from './GoogleMap.jsx';
 import SearchBox from './SearchBox.jsx';
 import transparentMarker from '../../assets/imgs/transparentMarker.png';
 import * as trailData from '../data/trail-data.json';
-// import * as restaurantData from '../data/restaurant-data.json';
-// import * as barData from '../data/bar-data.json';
 
 /**
  * MapWithASearchBox is an Google Map with an auto-completing search bar that searches
@@ -37,7 +35,9 @@ const MapWithASearchBox = React.memo(() => {
   const [selectedRestaurant, setSelectedRestaurant] = useState(null);
   const [displayRestaurants, setDisplayRestaurants] = useState(false);
   // const [restaurantsToken, setRestaurantsToken] = useState(null);
-  // const [bars, setBars] = useState(null);
+  const [bars, setBars] = useState(null);
+  const [selectedBar, setSelectedBar] = useState(null);
+  const [displayBars, setDisplayBars] = useState(false);
   // const [barsToken, setBarsToken] = useState(null);
   // const [nearbyTypesSelected, setNearbyTypesSelected] = useState([]);
   // const [establishments, setEstablishments] = useState(null);
@@ -87,8 +87,6 @@ const MapWithASearchBox = React.memo(() => {
   }, [restaurants]);
 
   const updateRestaurants = (lat, lng) => {
-    debugger;
-    console.log("***Update", lat, lng);
     const latStr = lat.toString();
     const lngStr = lng.toString();
     // const params = {
@@ -107,6 +105,53 @@ const MapWithASearchBox = React.memo(() => {
       })
       .then(({ data }) => {
         setRestaurants(data);
+        // if (data.next_page_token) {
+        //   setRestaurantsToken(data.next_page_token);
+        // } else {
+        //   setRestaurantsToken(null);
+        // }
+      })
+      // .then(() => {
+      //   combineEstablishments();
+      //   console.log('Combined in Restaurants:', establishments);
+      // })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
+  useEffect(() => {
+    console.log('*** Display Bar Update ***', displayBars);
+  }, [displayBars]);
+
+  useEffect(() => {
+    console.log('*** Selected Bar Update ***', selectedBar);
+  }, [selectedBar]);
+
+  useEffect(() => {
+    console.log('*** Bar Update Results ***', bars);
+  }, [bars]);
+
+  const updateBars = (lat, lng) => {
+    console.log(lat, lng);
+    const latStr = lat.toString();
+    const lngStr = lng.toString();
+    // const params = {
+    //   lat: latStr,
+    //   long: lngStr,
+    // };
+    // if (token !== null) {
+    //   params.token = token;
+    // }
+    axios
+      .get('/api/bars', {
+        params: {
+          lat: latStr,
+          lon: lngStr,
+        },
+      })
+      .then(({ data }) => {
+        setBars(data);
         // if (data.next_page_token) {
         //   setRestaurantsToken(data.next_page_token);
         // } else {
@@ -177,9 +222,8 @@ const MapWithASearchBox = React.memo(() => {
           Math.abs(+currentCenter.lat - +lastSearchedCenter.lat) > establishmentsRange ||
           Math.abs(+currentCenter.lng - +lastSearchedCenter.lng) > establishmentsRange
         ) {
-          console.log("***Move", currentCenter.lat, currentCenter.lng);
           updateRestaurants(currentCenter.lat, currentCenter.lng);
-          // updateBars(currentCenter.lat, currentCenter.lng);
+          updateBars(currentCenter.lat, currentCenter.lng);
         }
       });
       setMapInstance(map);
@@ -239,49 +283,6 @@ const MapWithASearchBox = React.memo(() => {
   // };
 
   // useEffect(() => {
-  //   console.log('*** Bars Data Results ***', bars);
-  // }, [bars]);
-
-  // const updateBars = (lat, lng) => {
-  //   const latStr = lat.toString();
-  //   const lngStr = lng.toString();
-  //   // const params = {
-  //   //   lat: latStr,
-  //   //   lon: lngStr,
-  //   // };
-  //   // if (token !== null) {
-  //   //   params.token = token;
-  //   // }
-  //   axios
-  //     .get('/api/bars', {
-  //       params: {
-  //         lat: latStr,
-  //         lon: lngStr,
-  //       },
-  //     })
-  //     .then(({ data }) => {
-  //       debugger;
-  //       if (data && bars) {
-  //         setBars(data.results);
-  //         console.log('*** Bars Data Token ***', data.next_page_token);
-  //         console.log('*** Bars Data Results ***', data.results);
-  //         if (data.next_page_token) {
-  //           setBarsToken(data.next_page_token);
-  //         } else {
-  //           setBarsToken(null);
-  //         }
-  //       }
-  //     })
-  //     .then(() => {
-  //       combineEstablishments();
-  //       console.log('Combined in Bars:', establishments);
-  //     })
-  //     .catch((err) => {
-  //       console.error(err);
-  //     });
-  // };
-
-  // useEffect(() => {
   //   if (restaurantsToken) {
   //     let restaurantsCopy = [...restaurants];
   //     let count = 0;
@@ -319,15 +320,25 @@ const MapWithASearchBox = React.memo(() => {
 
   const handleCheckboxChange = (event) => {
     const { checked, id } = event.target;
-    if (checked && id === 'restaurants') {
-      console.log(userLocation.lat, userLocation.lng);
-      updateRestaurants(userLocation.lat, userLocation.lng);
-      setDisplayRestaurants(true);
-    } else if (!checked && id === 'restaurants') {
-      setRestaurants(null);
-      setDisplayRestaurants(false);
+    if (id === 'restaurants') {
+      if (checked) {
+        updateRestaurants(userLocation.lat, userLocation.lng);
+        setDisplayRestaurants(true);
+      } else if (!checked) {
+        setRestaurants(null);
+        setDisplayRestaurants(false);
+      }
+      setSelectedRestaurant(null);
+    } else if (id === 'bars') {
+      if (checked) {
+        updateBars(userLocation.lat, userLocation.lng);
+        setDisplayBars(true);
+      } else if (!checked) {
+        setBars(null);
+        setDisplayBars(false);
+      }
+      setSelectedBar(null);
     }
-    setSelectedRestaurant(null);
     // if (nearbyTypesSelected.length > 0) {
     //   selectedTypes = [...nearbyTypesSelected];
     // }
@@ -360,12 +371,12 @@ const MapWithASearchBox = React.memo(() => {
                 Nearby Restaurants
               </label>
             </div>
-            {/* <div>
+            <div>
               <label htmlFor="bars">
-                <input type="checkbox" id="bars" onChange={handleChange} />
+                <input type="checkbox" id="bars" onChange={handleCheckboxChange} />
                 Nearby Bars
               </label>
-            </div> */}
+            </div>
           </div>
         </form>
       </div>
@@ -444,6 +455,72 @@ const MapWithASearchBox = React.memo(() => {
               }}
             />
           ))}
+
+          {selectedRestaurant && (
+            <InfoWindow
+              selectedRestaurant={selectedRestaurant}
+              onCloseClick={() => {
+                setSelectedRestaurant(null);
+              }}
+              position={{
+                lat: +selectedRestaurant.lat,
+                lng: +selectedRestaurant.lng,
+              }}
+            >
+              <div>
+                {/* <Link to={`/trail/${selectedTrail.id}`} activeclassname="active"> */}
+                  <h2>{selectedRestaurant.name}</h2>
+                {/* </Link> */}
+                <p>{selectedRestaurant.address}</p>
+                <p>{selectedRestaurant.types}</p>
+                <p>Rating: {selectedRestaurant.rating}</p>
+              </div>
+            </InfoWindow>
+          )}
+
+          {!isEmpty(bars) && displayBars &&
+          bars.map((bar) => (
+            <Marker
+              color={'food'}
+              key={bar.id}
+              text={bar.name}
+              size={28}
+              lat={bar.lat}
+              lng={bar.lng}
+              clickHandler={() => {
+                if (selectedBar && selectedBar.id === bar.id) {
+                  console.log("***ID matches so cleared selected");
+                  setSelectedBar(null);
+                } else {
+                  console.log("***ID doesn't matches so set selected");
+                  setSelectedBar(bar);
+                }
+              }}
+            />
+          ))}
+
+          {selectedBar && (
+            <InfoWindow
+              selectedBar={selectedBar}
+              onCloseClick={() => {
+                setSelectedBar(null);
+              }}
+              position={{
+                lat: +selectedBar.lat,
+                lng: +selectedBar.lng,
+              }}
+            >
+              <div>
+                {/* <Link to={`/trail/${selectedTrail.id}`} activeclassname="active"> */}
+                  <h2>{selectedBar.name}</h2>
+                {/* </Link> */}
+                <p>{selectedBar.address}</p>
+                <p>{selectedBar.types}</p>
+                <p>Rating: {selectedBar.rating}</p>
+              </div>
+            </InfoWindow>
+          )}
+          
       </GoogleMap>
     </>
   );
