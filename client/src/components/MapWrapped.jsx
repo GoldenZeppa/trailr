@@ -68,18 +68,6 @@ const MapWithASearchBox = React.memo(() => {
       });
   };
 
-  // useEffect(() => {
-  //   console.log('*** Display Restaurant Update ***', displayRestaurants);
-  // }, [displayRestaurants]);
-
-  // useEffect(() => {
-  //   console.log('*** Selected Restaurant Update ***', selectedRestaurant);
-  // }, [selectedRestaurant]);
-
-  // useEffect(() => {
-  //   console.log('*** Restaurant Update Results ***', restaurants);
-  // }, [restaurants]);
-
   const updateRestaurants = (lat, lng) => {
     const latStr = lat.toString();
     const lngStr = lng.toString();
@@ -113,18 +101,6 @@ const MapWithASearchBox = React.memo(() => {
         console.error(err);
       });
   };
-
-  // useEffect(() => {
-  //   console.log('*** Display Bar Update ***', displayBars);
-  // }, [displayBars]);
-
-  // useEffect(() => {
-  //   console.log('*** Selected Bar Update ***', selectedBar);
-  // }, [selectedBar]);
-
-  // useEffect(() => {
-  //   console.log('*** Bar Update Results ***', bars);
-  // }, [bars]);
 
   const updateBars = (lat, lng) => {
     console.log(lat, lng);
