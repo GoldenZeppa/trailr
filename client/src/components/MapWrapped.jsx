@@ -5,6 +5,7 @@ import MarkerClusterer from '@google/markerclusterer';
 import axios from 'axios';
 import Marker from './Marker.jsx';
 import InfoWindow from './InfoWindow.jsx';
+import PlaceInfoWindow from './PlaceInfoWindow.jsx';
 import GoogleMap from './GoogleMap.jsx';
 import SearchBox from './SearchBox.jsx';
 import transparentMarker from '../../assets/imgs/transparentMarker.png';
@@ -457,7 +458,7 @@ const MapWithASearchBox = React.memo(() => {
           ))}
 
           {selectedRestaurant && (
-            <InfoWindow
+            <PlaceInfoWindow
               selectedRestaurant={selectedRestaurant}
               onCloseClick={() => {
                 setSelectedRestaurant(null);
@@ -468,14 +469,14 @@ const MapWithASearchBox = React.memo(() => {
               }}
             >
               <div>
-                {/* <Link to={`/trail/${selectedTrail.id}`} activeclassname="active"> */}
+                <Link to={`/restaurant/${selectedRestaurant.id}`} activeclassname="active">
                   <h2>{selectedRestaurant.name}</h2>
-                {/* </Link> */}
-                <p>{selectedRestaurant.address}</p>
+                </Link>
+                <p>{selectedRestaurant.vicinity}</p>
                 <p>{selectedRestaurant.types}</p>
                 <p>Rating: {selectedRestaurant.rating}</p>
               </div>
-            </InfoWindow>
+            </PlaceInfoWindow>
           )}
 
           {!isEmpty(bars) && displayBars &&
@@ -500,7 +501,7 @@ const MapWithASearchBox = React.memo(() => {
           ))}
 
           {selectedBar && (
-            <InfoWindow
+            <PlaceInfoWindow
               selectedBar={selectedBar}
               onCloseClick={() => {
                 setSelectedBar(null);
@@ -511,14 +512,13 @@ const MapWithASearchBox = React.memo(() => {
               }}
             >
               <div>
-                {/* <Link to={`/trail/${selectedTrail.id}`} activeclassname="active"> */}
+                <Link to={`/bar/${selectedBar.id}`} activeclassname="active">
                   <h2>{selectedBar.name}</h2>
-                {/* </Link> */}
-                <p>{selectedBar.address}</p>
-                <p>{selectedBar.types}</p>
+                </Link>
+                <p>{selectedBar.vicinity}</p>
                 <p>Rating: {selectedBar.rating}</p>
               </div>
-            </InfoWindow>
+            </PlaceInfoWindow>
           )}
           
       </GoogleMap>
