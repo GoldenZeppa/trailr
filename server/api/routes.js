@@ -27,7 +27,7 @@ const {
 } = require('../../database/index.js');
 
 // import GCS functions
-const { uploadImage, authChecker } = require('../../helpers/helpers');
+const { uploadImage, authChecker, cleanPlacesData, cleanPlaceDetailData } = require('../../helpers/helpers');
 
 // set local variable to  a new instance of express router
 const router = Router();
@@ -115,6 +115,96 @@ router.get('/users/:id', (req, res) => {
     .catch((error) => {
       res.sendStatus(500);
       throw error;
+    });
+});
+
+/*
+* Route - Makes GET request to Google Places API for restaurants in user area.
+* Use - Uses axios function to retrieve general information on restaurants in users area from API.
+* Inputs - Axios function requires proper headers & params:
+*   {Param} - key - Google Places API key saved in .env file
+*   {Param} - location - Latitude and longitude are deconstructed from request query.
+*                        Must be specified as 'latitude,longitude'.
+* Returns - an array of objects, each containing restaurant information from API
+*/
+router.get('/restaurants', (req, res) => {
+  const { lat, lon } = req.query;
+  axios({
+    method: 'GET',
+    url: 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?',
+    headers: {
+      'content-type': 'application/json; charset=UTF-8',
+    },
+    params: {
+      key: process.env.GOOGLE_MAPS_API_KEY,
+      location: `${lat},${lon}`,
+      type: 'restaurant',
+      rankby: 'distance',
+    },
+  })
+    .then((response) => {
+      const restaurantsDataArray = cleanPlacesData(response.data.results);
+      res.send(restaurantsDataArray);
+    })
+    .catch((err) => {
+      throw err;
+    });
+});
+
+/*
+* Route - Makes GET request to Google Places API for bars in user area.
+* Use - Uses axios function to retrieve general information on bars in users area from API.
+* Inputs - Axios function requires proper headers & params:
+*   {Param} - key - Google Places API key saved in .env file
+*   {Param} - location - Latitude and longitude are deconstructed from request query.
+*                        Must be specified as 'latitude,longitude'.
+* Returns - an array of objects, each containing restaurant information from API
+*/
+router.get('/bars', (req, res) => {
+  const { lat, lon } = req.query;
+  axios({
+    method: 'GET',
+    url: 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?',
+    headers: {
+      'content-type': 'application/json; charset=UTF-8',
+    },
+    params: {
+      key: process.env.GOOGLE_MAPS_API_KEY,
+      location: `${lat},${lon}`,
+      type: 'bar',
+      rankby: 'distance',
+    },
+  })
+    .then((response) => {
+      const barsDataArray = cleanPlacesData(response.data.results);
+      res.send(barsDataArray);
+    })
+    .catch((err) => {
+      throw err;
+    });
+});
+
+/*
+* route - returns requested place detail information when given id number
+* {Param} - id - deconstructed from req.params
+* returns - object containing detailed information of a Google Place information from API
+*/
+router.get('/place/:id', (req, res) => {
+  const { id } = req.params;
+  axios({
+    method: 'GET',
+    url: 'https://maps.googleapis.com/maps/api/place/details/json?',
+    params: {
+      key: process.env.GOOGLE_MAPS_API_KEY,
+      place_id: id,
+    },
+  })
+    .then((response) => {
+      const placeDetailObj = cleanPlaceDetailData(response.data.result);
+      res.send(placeDetailObj);
+    })
+    .catch((err) => {
+      throw err;
     });
 });
 
@@ -521,7 +611,7 @@ router.get('/birds/sounds', (req, res) => {
   const { birdName } = req.query;
 
   const birdNameForAPI = birdName.replace('-', '');
-  
+
   axios.get(`http://www.xeno-canto.org/api/2/recordings?query=${birdNameForAPI}`)
     .then((birdSound) => res.send(birdSound.data.recordings[0].file))
     .catch((err) => res.status(500).send(err));

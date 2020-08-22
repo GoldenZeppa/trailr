@@ -6,6 +6,7 @@ import MarkerClusterer from '@google/markerclusterer';
 import axios from 'axios';
 import Marker from './Marker.jsx';
 import InfoWindow from './InfoWindow.jsx';
+import PlaceInfoWindow from './PlaceInfoWindow.jsx';
 import GoogleMap from './GoogleMap.jsx';
 import SearchBox from './SearchBox.jsx';
 import transparentMarker from '../../assets/imgs/transparentMarker.png';
@@ -30,6 +31,12 @@ const MapWithASearchBox = React.memo(() => {
   });
   const [selectedTrail, setSelectedTrail] = useState(null);
   const [selectedTrailIndex, setSelectedTrailIndex] = useState(null);
+  const [restaurants, setRestaurants] = useState(null);
+  const [selectedRestaurant, setSelectedRestaurant] = useState(null);
+  const [displayRestaurants, setDisplayRestaurants] = useState(false);
+  const [bars, setBars] = useState(null);
+  const [selectedBar, setSelectedBar] = useState(null);
+  const [displayBars, setDisplayBars] = useState(false);
 
   const addPlace = (place) => {
     setPlaces(place);
@@ -56,6 +63,42 @@ const MapWithASearchBox = React.memo(() => {
         if (places) {
           setPlaces(data);
         }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
+  const updateRestaurants = (lat, lng) => {
+    const latStr = lat.toString();
+    const lngStr = lng.toString();
+    axios
+      .get('/api/restaurants', {
+        params: {
+          lat: latStr,
+          lon: lngStr,
+        },
+      })
+      .then(({ data }) => {
+        setRestaurants(data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
+  const updateBars = (lat, lng) => {
+    const latStr = lat.toString();
+    const lngStr = lng.toString();
+    axios
+      .get('/api/bars', {
+        params: {
+          lat: latStr,
+          lon: lngStr,
+        },
+      })
+      .then(({ data }) => {
+        setBars(data);
       })
       .catch((err) => {
         console.error(err);
@@ -111,6 +154,14 @@ const MapWithASearchBox = React.memo(() => {
           lastSearchedCenter = currentCenter;
           updateTrails(radius, currentCenter.lat, currentCenter.lng);
         }
+        const establishmentsRange = 0.1; // Change needed in lat/long degrees to refresh search
+        if (
+          Math.abs(+currentCenter.lat - +lastSearchedCenter.lat) > establishmentsRange ||
+          Math.abs(+currentCenter.lng - +lastSearchedCenter.lng) > establishmentsRange
+        ) {
+          updateRestaurants(currentCenter.lat, currentCenter.lng);
+          updateBars(currentCenter.lat, currentCenter.lng);
+        }
       });
       setMapInstance(map);
       setMapApi(maps);
@@ -144,6 +195,29 @@ const MapWithASearchBox = React.memo(() => {
     setGoogleMapRef(mapInstance, mapApi);
   }, [places]);
 
+  const handleCheckboxChange = (event) => {
+    const { checked, id } = event.target;
+    if (id === 'restaurants') {
+      if (checked) {
+        updateRestaurants(userLocation.lat, userLocation.lng);
+        setDisplayRestaurants(true);
+      } else if (!checked) {
+        setRestaurants(null);
+        setDisplayRestaurants(false);
+      }
+      setSelectedRestaurant(null);
+    } else if (id === 'bars') {
+      if (checked) {
+        updateBars(userLocation.lat, userLocation.lng);
+        setDisplayBars(true);
+      } else if (!checked) {
+        setBars(null);
+        setDisplayBars(false);
+      }
+      setSelectedBar(null);
+    }
+  };
+
   return (
     <>
       {mapApiLoaded && (
@@ -154,6 +228,26 @@ const MapWithASearchBox = React.memo(() => {
           addplace={addPlace}
         />
       )}
+
+      <div>
+        <form>
+          <div className="checkboxes">
+            <div>
+              <label htmlFor="restaurants">
+                <input type="checkbox" id="restaurants" onChange={handleCheckboxChange} />
+                Nearby Restaurants
+              </label>
+            </div>
+            <div>
+              <label htmlFor="bars">
+                <input type="checkbox" id="bars" onChange={handleCheckboxChange} />
+                Nearby Bars
+              </label>
+            </div>
+          </div>
+        </form>
+      </div>
+
       <GoogleMap
         defaultZoom={10}
         defaultCenter={{
@@ -207,6 +301,66 @@ const MapWithASearchBox = React.memo(() => {
               <p>{selectedTrail.description}</p>
             </div>
           </InfoWindow>
+        )}
+        {!isEmpty(restaurants) && displayRestaurants &&
+          restaurants.map((restaurant) => (
+            <Marker
+              color={'food'}
+              key={restaurant.id}
+              text={restaurant.name}
+              size={28}
+              lat={restaurant.lat}
+              lng={restaurant.lng}
+              clickHandler={() => {
+                if (selectedRestaurant && selectedRestaurant.id === restaurant.id) {
+                  setSelectedRestaurant(null);
+                } else {
+                  setSelectedRestaurant(restaurant);
+                }
+              }}
+            />
+          ))}
+        {selectedRestaurant && (
+          <PlaceInfoWindow
+            selectedPlace={selectedRestaurant}
+            onCloseClick={() => {
+              setSelectedRestaurant(null);
+            }}
+            position={{
+              lat: +selectedRestaurant.lat,
+              lng: +selectedRestaurant.lng,
+            }}
+          />
+        )}
+        {!isEmpty(bars) && displayBars &&
+        bars.map((bar) => (
+          <Marker
+            color={'drink'}
+            key={bar.id}
+            text={bar.name}
+            size={28}
+            lat={bar.lat}
+            lng={bar.lng}
+            clickHandler={() => {
+              if (selectedBar && selectedBar.id === bar.id) {
+                setSelectedBar(null);
+              } else {
+                setSelectedBar(bar);
+              }
+            }}
+          />
+        ))}
+        {selectedBar && (
+          <PlaceInfoWindow
+            selectedPlace={selectedBar}
+            onCloseClick={() => {
+              setSelectedBar(null);
+            }}
+            position={{
+              lat: +selectedBar.lat,
+              lng: +selectedBar.lng,
+            }}
+          />
         )}
       </GoogleMap>
     </>

@@ -1,5 +1,6 @@
 const util = require('util');
 const gc = require('../config/google-cloud-storage');
+const { now } = require('jquery');
 
 const bucket = gc.bucket(process.env.GCLOUD_BUCKET_NAME); // should be your bucket name
 
@@ -37,7 +38,105 @@ const uploadImage = (file) => new Promise((resolve, reject) => {
  */
 const authChecker = (user) => !!user;
 
+/**
+ * Clean up Google Places API response.results for general info of multiple restaurants/bars
+ * @param {Array} Google Places array
+ */
+const cleanPlacesData = (placesArray) => {
+  return placesArray.map(place => {
+    const cleanPlace = {};
+    // Check if needed data exists
+    // If so, add to clean data object
+    if (place.place_id) {
+      cleanPlace.id = place.place_id;
+    }
+    if (place.name) {
+      cleanPlace.name = place.name;
+    }
+    if (place.vicinity) {
+      cleanPlace.vicinity = place.vicinity;
+    }
+    if (place.opening_hours && place.opening_hours.open_now) {
+      cleanPlace.openNow = place.opening_hours.open_now;
+    }
+    if (place.geometry.location.lat) {
+      cleanPlace.lat = place.geometry.location.lat;
+    }
+    if (place.geometry.location.lng) {
+      cleanPlace.lng = place.geometry.location.lng;
+    }
+    if (place.types) {
+      cleanPlace.types = place.types;
+    }
+    if (place.rating) {
+      cleanPlace.rating = place.rating;
+    }
+    if (place.icon) {
+      cleanPlace.icon = place.icon;
+    }
+    // Return clean data for Google Place
+    return cleanPlace;
+  });
+};
+
+/**
+ * Clean up Google Places API response.results for detailed info of a restaurant/bar
+ * @param {Object} Google Place object
+ */
+const cleanPlaceDetailData = (placeObj) => {
+  const place = placeObj;
+  const cleanPlace = {};
+  // Check if needed data exists
+  // If so, add to clean data object
+  if (place.place_id) {
+    cleanPlace.id = place.place_id;
+  }
+  if (place.name) {
+    cleanPlace.name = place.name;
+  }
+  if (place.formatted_address) {
+    cleanPlace.address = place.formatted_address;
+  }
+  if (place.formatted_phone_number) {
+    cleanPlace.phoneNumber = place.formatted_phone_number;
+  }
+  if (place.vicinity) {
+    cleanPlace.vicinity = place.vicinity;
+  }
+  if (place.opening_hours && place.opening_hours.open_now) {
+    cleanPlace.openNow = place.opening_hours.open_now;
+  }
+  if (place.opening_hours && place.opening_hours.weekday_text) {
+    cleanPlace.weekdayText = place.opening_hours.weekday_text;
+  }
+  if (place.geometry.location.lat) {
+    cleanPlace.lat = place.geometry.location.lat;
+  }
+  if (place.geometry.location.lng) {
+    cleanPlace.lng = place.geometry.location.lng;
+  }
+  if (place.types) {
+    cleanPlace.types = place.types;
+  }
+  if (place.rating) {
+    cleanPlace.rating = place.rating;
+  }
+  if (place.icon) {
+    cleanPlace.icon = place.icon;
+  }
+  if (place.photos) {
+    cleanPlace.photos = place.photos;
+  }
+  if (place.website) {
+    cleanPlace.icon = place.website;
+  }
+  // Return clean data for Google Place
+  return cleanPlace;
+};
+
 module.exports = {
   uploadImage,
   authChecker,
+  cleanPlacesData,
+  cleanPlaceDetailData,
 };
