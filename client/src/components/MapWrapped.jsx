@@ -87,7 +87,6 @@ const MapWithASearchBox = React.memo(() => {
   };
 
   const updateBars = (lat, lng) => {
-    console.log(lat, lng);
     const latStr = lat.toString();
     const lngStr = lng.toString();
     axios
