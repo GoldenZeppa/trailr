@@ -23,7 +23,8 @@ const PlaceInfoWindow = React.memo(({ selectedPlace, onCloseClick }) => {
   const { id } = selectedPlace;
   const [redirect, setRedirect] = useState(false);
   const [placeDetail, setPlaceDetail] = useState(null);
-  const place = selectedPlace;
+  const [loading, setLoading] = useState(true);
+
   const infoWindowStyle = {
     position: 'relative',
     bottom: 150,
@@ -49,16 +50,17 @@ const PlaceInfoWindow = React.memo(({ selectedPlace, onCloseClick }) => {
         setPlaceDetail(data);
       })
       .catch((err) => {
-        console.error("ERROR GETTING PLACE:", err);
         reject(err);
       });
   };
-  
+
   useEffect(() => {
-    console.log("*** Update place", placeDetail);
+    console.log("*** Update placeDetail", placeDetail);
+    setLoading(false);
   }, [placeDetail]);
 
   useEffect(() => {
+    setLoading(true);
     getPlaceDetail(id);
   }, []);
 
@@ -70,9 +72,8 @@ const PlaceInfoWindow = React.memo(({ selectedPlace, onCloseClick }) => {
     //   latitude: +place.lat,
     //   longitude: +place.lng,
     // };
-    // // addPlace(placeDetail)
+    // // addTrail(placeDetail)
     // //   .then((response) => {
-    //     console.log("Redirect to bar/restaurant");
     //     setRedirect(`/place/${response.id}`);
     //   // })
     //   // .catch((err) => {
@@ -115,15 +116,20 @@ const PlaceInfoWindow = React.memo(({ selectedPlace, onCloseClick }) => {
                   style={{ width: '130px' }}
                 />
               </div> */}
+              {!loading && (
               <div style={{ fontSize: 14, color: 'white' }}>
-                {place.name}
+                {placeDetail.name}
                 <br />
-                {place.vicinity}
+                {placeDetail.address}
+                {placeDetail.phoneNumber}
                 <br />
-                {place.rating}
+                Rating: {placeDetail.rating}
                 <br />
-                {place.open_now ? 'Currently Open' : 'Currently Closed'}
+                . . . {placeDetail.openNow ? 'Currently Open' : 'Currently Closed'} . . .
+                <br />
+                {placeDetail.weekdayText}
               </div>
+              )}
               {/* <div
                 className="text-truncate"
                 style={{ fontSize: 14, color: 'white', width: '14rem' }}

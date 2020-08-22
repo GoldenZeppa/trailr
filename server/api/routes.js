@@ -187,7 +187,6 @@ router.get('/bars', (req, res) => {
 * returns - object containing detailed information of a Google Place information from API
 */
 router.get('/place/:id', (req, res) => {
-  // const { id } = req.query;
   const { id } = req.params;
   axios({
     method: 'GET',

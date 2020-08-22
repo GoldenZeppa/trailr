@@ -57,7 +57,7 @@ const cleanPlacesData = (placesArray) => {
       cleanPlace.vicinity = place.vicinity;
     }
     if (place.opening_hours && place.opening_hours.open_now) {
-      cleanPlace.open_now = place.opening_hours.open_now;
+      cleanPlace.openNow = place.opening_hours.open_now;
     }
     if (place.geometry.location.lat) {
       cleanPlace.lat = place.geometry.location.lat;
@@ -98,16 +98,16 @@ const cleanPlaceDetailData = (placeObj) => {
     cleanPlace.address = place.formatted_address;
   }
   if (place.formatted_phone_number) {
-    cleanPlace.phone_number = place.formatted_phone_number;
+    cleanPlace.phoneNumber = place.formatted_phone_number;
   }
   if (place.vicinity) {
     cleanPlace.vicinity = place.vicinity;
   }
   if (place.opening_hours && place.opening_hours.open_now) {
-    cleanPlace.open_now = place.opening_hours.open_now;
+    cleanPlace.openNow = place.opening_hours.open_now;
   }
   if (place.opening_hours && place.opening_hours.weekday_text) {
-    cleanPlace.weekday_text = place.opening_hours.weekday_text;
+    cleanPlace.weekdayText = place.opening_hours.weekday_text;
   }
   if (place.geometry.location.lat) {
     cleanPlace.lat = place.geometry.location.lat;
