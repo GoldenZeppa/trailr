@@ -30,19 +30,12 @@ const MapWithASearchBox = React.memo(() => {
   });
   const [selectedTrail, setSelectedTrail] = useState(null);
   const [selectedTrailIndex, setSelectedTrailIndex] = useState(null);
-
-  // *** LZ - begin
   const [restaurants, setRestaurants] = useState(null);
   const [selectedRestaurant, setSelectedRestaurant] = useState(null);
   const [displayRestaurants, setDisplayRestaurants] = useState(false);
-  // const [restaurantsToken, setRestaurantsToken] = useState(null);
   const [bars, setBars] = useState(null);
   const [selectedBar, setSelectedBar] = useState(null);
   const [displayBars, setDisplayBars] = useState(false);
-  // const [barsToken, setBarsToken] = useState(null);
-  // const [nearbyTypesSelected, setNearbyTypesSelected] = useState([]);
-  // const [establishments, setEstablishments] = useState(null);git 
-  // *** LZ - end
 
   const addPlace = (place) => {
     setPlaces(place);
@@ -75,17 +68,17 @@ const MapWithASearchBox = React.memo(() => {
       });
   };
 
-  useEffect(() => {
-    console.log('*** Display Restaurant Update ***', displayRestaurants);
-  }, [displayRestaurants]);
+  // useEffect(() => {
+  //   console.log('*** Display Restaurant Update ***', displayRestaurants);
+  // }, [displayRestaurants]);
 
-  useEffect(() => {
-    console.log('*** Selected Restaurant Update ***', selectedRestaurant);
-  }, [selectedRestaurant]);
+  // useEffect(() => {
+  //   console.log('*** Selected Restaurant Update ***', selectedRestaurant);
+  // }, [selectedRestaurant]);
 
-  useEffect(() => {
-    console.log('*** Restaurant Update Results ***', restaurants);
-  }, [restaurants]);
+  // useEffect(() => {
+  //   console.log('*** Restaurant Update Results ***', restaurants);
+  // }, [restaurants]);
 
   const updateRestaurants = (lat, lng) => {
     const latStr = lat.toString();
@@ -121,17 +114,17 @@ const MapWithASearchBox = React.memo(() => {
       });
   };
 
-  useEffect(() => {
-    console.log('*** Display Bar Update ***', displayBars);
-  }, [displayBars]);
+  // useEffect(() => {
+  //   console.log('*** Display Bar Update ***', displayBars);
+  // }, [displayBars]);
 
-  useEffect(() => {
-    console.log('*** Selected Bar Update ***', selectedBar);
-  }, [selectedBar]);
+  // useEffect(() => {
+  //   console.log('*** Selected Bar Update ***', selectedBar);
+  // }, [selectedBar]);
 
-  useEffect(() => {
-    console.log('*** Bar Update Results ***', bars);
-  }, [bars]);
+  // useEffect(() => {
+  //   console.log('*** Bar Update Results ***', bars);
+  // }, [bars]);
 
   const updateBars = (lat, lng) => {
     console.log(lat, lng);
@@ -454,7 +447,6 @@ const MapWithASearchBox = React.memo(() => {
               }}
             />
           ))}
-
         {selectedRestaurant && (
           <PlaceInfoWindow
             selectedPlace={selectedRestaurant}
@@ -465,18 +457,8 @@ const MapWithASearchBox = React.memo(() => {
               lat: +selectedRestaurant.lat,
               lng: +selectedRestaurant.lng,
             }}
-          >
-            <div>
-              <Link to={`/place/${selectedRestaurant.id}`} activeclassname="active">
-                <h2>{selectedRestaurant.name}</h2>
-              </Link>
-              <p>{selectedRestaurant.vicinity}</p>
-              <p>{selectedRestaurant.types}</p>
-              <p>Rating: {selectedRestaurant.rating}</p>
-            </div>
-          </PlaceInfoWindow>
+          />
         )}
-
         {!isEmpty(bars) && displayBars &&
         bars.map((bar) => (
           <Marker
@@ -495,7 +477,6 @@ const MapWithASearchBox = React.memo(() => {
             }}
           />
         ))}
-
         {selectedBar && (
           <PlaceInfoWindow
             selectedPlace={selectedBar}
@@ -506,17 +487,8 @@ const MapWithASearchBox = React.memo(() => {
               lat: +selectedBar.lat,
               lng: +selectedBar.lng,
             }}
-          >
-            <div>
-              <Link to={`/place/${selectedBar.id}`} activeclassname="active">
-                <h2>{selectedBar.name}</h2>
-              </Link>
-              <p>{selectedBar.vicinity}</p>
-              <p>Rating: {selectedBar.rating}</p>
-            </div>
-          </PlaceInfoWindow>
+          />
         )}
-          
       </GoogleMap>
     </>
   );

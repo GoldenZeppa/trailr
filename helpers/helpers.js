@@ -42,8 +42,8 @@ const authChecker = (user) => !!user;
  * Clean up Google Places API response.results for general info of multiple restaurants/bars
  * @param {Array} Google Places array
  */
-const cleanGooglePlacesData = (placesDataArray) => {
-  return placesDataArray.map(place => {
+const cleanGooglePlacesData = (placesArray) => {
+  return placesArray.map(place => {
     const cleanPlace = {};
     // Check if needed data exists
     // If so, add to clean data object
@@ -83,8 +83,8 @@ const cleanGooglePlacesData = (placesDataArray) => {
  * Clean up Google Places API response.results for detailed info of a restaurant/bar
  * @param {Object} Google Place object
  */
-const cleanGooglePlaceDetailData = (placeDataObj) => {
-  const place = placeDataObj;
+const cleanGooglePlaceDetailData = (placeObj) => {
+  const place = placeObj;
   const cleanPlace = {};
   // Check if needed data exists
   // If so, add to clean data object
