@@ -24,7 +24,7 @@ const {
 } = require('../../database/index.js');
 
 // import GCS functions
-const { uploadImage, authChecker } = require('../../helpers/helpers');
+const { uploadImage, authChecker, cleanGooglePlacesData } = require('../../helpers/helpers');
 
 // set local variable to  a new instance of express router
 const router = Router();
@@ -142,8 +142,8 @@ router.get('/restaurants', (req, res) => {
     },
   })
     .then((response) => {
-      const restaurantsData = response.data.results;
-      res.send(restaurantsData);
+      const restaurantsDataArray = cleanGooglePlacesData(response.data.results);
+      res.send(restaurantsDataArray);
     })
     .catch((err) => {
       throw err;
@@ -177,8 +177,8 @@ router.get('/bars', (req, res) => {
     },
   })
     .then((response) => {
-      const barsData = response.data.results;
-      res.send(barsData);
+      const barsDataArray = cleanGooglePlacesData(response.data.results);
+      res.send(barsDataArray);
     })
     .catch((err) => {
       throw err;

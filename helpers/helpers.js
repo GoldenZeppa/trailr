@@ -1,5 +1,6 @@
 const util = require('util');
 const gc = require('../config/google-cloud-storage');
+const { now } = require('jquery');
 
 const bucket = gc.bucket(process.env.GCLOUD_BUCKET_NAME); // should be your bucket name
 
@@ -37,7 +38,49 @@ const uploadImage = (file) => new Promise((resolve, reject) => {
  */
 const authChecker = (user) => !!user;
 
+/**
+ * Clean up Google Places API response.results
+ * @param {Array} Google places
+ */
+const cleanGooglePlacesData = (data) => {
+  return data.map(place => {
+    const cleanPlace = {};
+    // Check if needed data exists
+    // If so, add to clean data object
+    if (place.place_id) {
+      cleanPlace.id = place.place_id;
+    }
+    if (place.name) {
+      cleanPlace.name = place.name;
+    }
+    if (place.vicinity) {
+      cleanPlace.address = place.vicinity;
+    }
+    if (place.opening_hours && place.opening_hours.open_now) {
+      cleanPlace.open_now = place.opening_hours.open_now;
+    }
+    if (place.geometry.location.lat) {
+      cleanPlace.lat = place.geometry.location.lat;
+    }
+    if (place.geometry.location.lng) {
+      cleanPlace.lng = place.geometry.location.lng;
+    }
+    if (place.types) {
+      cleanPlace.types = place.types;
+    }
+    if (place.rating) {
+      cleanPlace.rating = place.rating;
+    }
+    if (place.icon) {
+      cleanPlace.icon = place.icon;
+    }
+    // Return clean data for Google Place
+    return cleanPlace;
+  });
+};
+
 module.exports = {
   uploadImage,
   authChecker,
+  cleanGooglePlacesData,
 };
