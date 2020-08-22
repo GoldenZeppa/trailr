@@ -71,13 +71,6 @@ const MapWithASearchBox = React.memo(() => {
   const updateRestaurants = (lat, lng) => {
     const latStr = lat.toString();
     const lngStr = lng.toString();
-    // const params = {
-    //   lat: latStr,
-    //   long: lngStr,
-    // };
-    // if (token !== null) {
-    //   params.token = token;
-    // }
     axios
       .get('/api/restaurants', {
         params: {
@@ -87,16 +80,7 @@ const MapWithASearchBox = React.memo(() => {
       })
       .then(({ data }) => {
         setRestaurants(data);
-        // if (data.next_page_token) {
-        //   setRestaurantsToken(data.next_page_token);
-        // } else {
-        //   setRestaurantsToken(null);
-        // }
       })
-      // .then(() => {
-      //   combineEstablishments();
-      //   console.log('Combined in Restaurants:', establishments);
-      // })
       .catch((err) => {
         console.error(err);
       });
@@ -106,13 +90,6 @@ const MapWithASearchBox = React.memo(() => {
     console.log(lat, lng);
     const latStr = lat.toString();
     const lngStr = lng.toString();
-    // const params = {
-    //   lat: latStr,
-    //   long: lngStr,
-    // };
-    // if (token !== null) {
-    //   params.token = token;
-    // }
     axios
       .get('/api/bars', {
         params: {
@@ -122,16 +99,7 @@ const MapWithASearchBox = React.memo(() => {
       })
       .then(({ data }) => {
         setBars(data);
-        // if (data.next_page_token) {
-        //   setRestaurantsToken(data.next_page_token);
-        // } else {
-        //   setRestaurantsToken(null);
-        // }
       })
-      // .then(() => {
-      //   combineEstablishments();
-      //   console.log('Combined in Restaurants:', establishments);
-      // })
       .catch((err) => {
         console.error(err);
       });
@@ -231,63 +199,6 @@ const MapWithASearchBox = React.memo(() => {
     setGoogleMapRef(mapInstance, mapApi);
   }, [places]);
 
-  // const combineEstablishments = () => {
-  //   debugger;
-  //   let combined;
-  //   if (nearbyTypesSelected.length === 2) {
-  //     combined = [...restaurants];
-  //     for (let i = 0; i < bars.length; i++) {
-  //       const currentBar = bars[i];
-  //       if (restaurants.indexOf(currentBar) === -1) {
-  //         combined.push(currentBar);
-  //       }
-  //     }
-  //     setEstablishments(combined);
-  //   } else if (nearbyTypesSelected.includes(restaurants)) {
-  //     setEstablishments(restaurants);
-  //   } else if (nearbyTypesSelected.includes(bars)) {
-  //     setEstablishments(bars);
-  //   } else {
-  //     setEstablishments(null);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (restaurantsToken) {
-  //     let restaurantsCopy = [...restaurants];
-  //     let count = 0;
-  //     console.log('UseEffect Token:', restaurantsToken);
-  //     // while
-  //     updateRestaurants(userLocation.lat, userLocation.lng, restaurantsToken);
-  //     //   count++;
-  //     // }
-  //     // if (restaurants.length > 0 && restaurants !== restaurantsCopy) {
-  //     //   setRestaurants([...restaurantsCopy, ...restaurants]);
-  //     // }
-  //   }
-  //   console.log('UseEffect Restaurants:', restaurants);
-  // }, [restaurantsToken]);
-
-  // useEffect(() => {
-  //   updateEstablishments(userLocation.lat, userLocation.lng);
-  //   console.log('UseEffect Restaurants:', restaurants);
-  // }, [nearbyTypesSelected]);
-
-  // const updateEstablishments = (lat, lng) => {
-  //   debugger;
-  //   if (nearbyTypesSelected.indexOf('restaurants') > -1) {
-  //     updateRestaurants(lat, lng);
-  //   } else {
-  //     setRestaurants(null);
-  //   }
-  //   if (nearbyTypesSelected.indexOf('bars') > -1) {
-  //     updateBars(lat, lng);
-  //   } else {
-  //     setBars(null);
-  //   }
-  //   combineEstablishments();
-  // };
-
   const handleCheckboxChange = (event) => {
     const { checked, id } = event.target;
     if (id === 'restaurants') {
@@ -309,16 +220,6 @@ const MapWithASearchBox = React.memo(() => {
       }
       setSelectedBar(null);
     }
-    // if (nearbyTypesSelected.length > 0) {
-    //   selectedTypes = [...nearbyTypesSelected];
-    // }
-    // const index = selectedTypes.indexOf(id);
-    // if (checked && index === -1) {
-    //   selectedTypes.push(id);
-    // } else if (!checked && index > -1) {
-    //   selectedTypes.splice(index, 1);
-    // }
-    // setNearbyTypesSelected(selectedTypes);
   };
 
   return (
