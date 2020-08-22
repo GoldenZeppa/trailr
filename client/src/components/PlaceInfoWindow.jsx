@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import axios from 'axios';
 import { OverlayTrigger, Popover, Button, Image } from 'react-bootstrap';
 import styled from 'styled-components';
 // import { addTrail } from '../helpers';
@@ -12,14 +14,15 @@ const LinkDiv = styled.div`
 
 /**
  * PlaceInfoWindow is small pop-up window that displays a clickable title of the currently selected
- * establishment, along with a thumbnail, and truncated description. The title is clickable,
- * and directs the user to the place page for that selected trail.
- * @param {Object} selectedPlace an object with information specific to the currently selected Google Place (restaurant/bar)
+ * establishment.
+ * @param {Object} selectedPlace an object with general information to the currently selected Google Place (restaurant/bar)
  * @param {Function} onCloseClick a function that changes the current photo
  */
 
 const PlaceInfoWindow = React.memo(({ selectedPlace, onCloseClick }) => {
+  const { id } = selectedPlace;
   const [redirect, setRedirect] = useState(false);
+  const [placeDetail, setPlaceDetail] = useState(null);
   const place = selectedPlace;
   const infoWindowStyle = {
     position: 'relative',
@@ -32,16 +35,42 @@ const PlaceInfoWindow = React.memo(({ selectedPlace, onCloseClick }) => {
     fontSize: 14,
     zIndex: 0,
   };
-  console.log('Window', selectedPlace);
+
+  /**
+   * Calls the api to get a place's detail data
+   * @param {Number} placeId a place's id number based on general place info
+   */
+  const getPlaceDetail = (placeId) => {
+    axios({
+      method: 'get',
+      url: `/api/place/${placeId}`,
+    })
+      .then(({ data }) => {
+        setPlaceDetail(data);
+      })
+      .catch((err) => {
+        console.error("ERROR GETTING PLACE:", err);
+        reject(err);
+      });
+  };
+  
+  useEffect(() => {
+    console.log("*** Update place", placeDetail);
+  }, [placeDetail]);
+
+  useEffect(() => {
+    getPlaceDetail(id);
+  }, []);
+
   const clickHandler = () => {
     console.log("Clicked");
-    // const PlaceData = {
+    // const PlaceDetail = {
     //   ...place,
     //   api_id: place.id,
     //   latitude: +place.lat,
     //   longitude: +place.lng,
     // };
-    // // addPlace(placeData)
+    // // addPlace(placeDetail)
     // //   .then((response) => {
     //     console.log("Redirect to bar/restaurant");
     //     setRedirect(`/place/${response.id}`);
@@ -91,6 +120,8 @@ const PlaceInfoWindow = React.memo(({ selectedPlace, onCloseClick }) => {
                 <br />
                 {place.vicinity}
                 <br />
+                {place.rating}
+                <br />
                 {place.open_now ? 'Currently Open' : 'Currently Closed'}
               </div>
               {/* <div
@@ -109,3 +140,10 @@ const PlaceInfoWindow = React.memo(({ selectedPlace, onCloseClick }) => {
 });
 
 export default PlaceInfoWindow;
+
+PlaceInfoWindow.propTypes = {
+  onCloseClick: PropTypes.func.isRequired,
+  selectedPlace: PropTypes.shape({
+    id: PropTypes.string,
+  }).isRequired,
+};

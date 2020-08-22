@@ -24,7 +24,7 @@ const {
 } = require('../../database/index.js');
 
 // import GCS functions
-const { uploadImage, authChecker, cleanGooglePlacesData } = require('../../helpers/helpers');
+const { uploadImage, authChecker, cleanPlacesData, cleanPlaceDetailData } = require('../../helpers/helpers');
 
 // set local variable to  a new instance of express router
 const router = Router();
@@ -140,7 +140,7 @@ router.get('/restaurants', (req, res) => {
     },
   })
     .then((response) => {
-      const restaurantsDataArray = cleanGooglePlacesData(response.data.results);
+      const restaurantsDataArray = cleanPlacesData(response.data.results);
       res.send(restaurantsDataArray);
     })
     .catch((err) => {
@@ -173,7 +173,7 @@ router.get('/bars', (req, res) => {
     },
   })
     .then((response) => {
-      const barsDataArray = cleanGooglePlacesData(response.data.results);
+      const barsDataArray = cleanPlacesData(response.data.results);
       res.send(barsDataArray);
     })
     .catch((err) => {
@@ -187,29 +187,23 @@ router.get('/bars', (req, res) => {
 * returns - object containing detailed information of a Google Place information from API
 */
 router.get('/place/:id', (req, res) => {
-  console.log(req.query, req.params);
-  debugger;
-  const { id } = req.query;
-  const idT = req.params.id;
-  // axios({
-  //   method: 'GET',
-  //   url: 'https://maps.googleapis.com/maps/api/place/details/json?',
-  //   headers: {
-  //     'content-type': 'application/json; charset=UTF-8',
-  //   },
-  //   params: {
-  //     key: process.env.GOOGLE_MAPS_API_KEY,
-  //     id: `id`,
-  //   },
-  // })
-  //   .then((response) => {
-  //     console.log(response.data.results);
-  //     const restaurantDataArray = cleanGooglePlaceDetailData(response.data.results);
-  //     res.send(restaurantDataArray);
-  //   })
-  //   .catch((err) => {
-  //     throw err;
-  //   });
+  // const { id } = req.query;
+  const { id } = req.params;
+  axios({
+    method: 'GET',
+    url: 'https://maps.googleapis.com/maps/api/place/details/json?',
+    params: {
+      key: process.env.GOOGLE_MAPS_API_KEY,
+      place_id: id,
+    },
+  })
+    .then((response) => {
+      const placeDetailObj = cleanPlaceDetailData(response.data.result);
+      res.send(placeDetailObj);
+    })
+    .catch((err) => {
+      throw err;
+    });
 });
 
 /* POST Request Handlers */
