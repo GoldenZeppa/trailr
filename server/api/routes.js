@@ -117,7 +117,7 @@ router.get('/users/:id', (req, res) => {
 
 /*
 * Route - Makes GET request to Google Places API for restaurants in user area.
-* Use - Uses axios function to retrieve information on restaurants in users area from API.
+* Use - Uses axios function to retrieve general information on restaurants in users area from API.
 * Inputs - Axios function requires proper headers & params:
 *   {Param} - key - Google Places API key saved in .env file
 *   {Param} - location - Latitude and longitude are deconstructed from request query.
@@ -150,7 +150,7 @@ router.get('/restaurants', (req, res) => {
 
 /*
 * Route - Makes GET request to Google Places API for bars in user area.
-* Use - Uses axios function to retrieve information on bars in users area from API.
+* Use - Uses axios function to retrieve general information on bars in users area from API.
 * Inputs - Axios function requires proper headers & params:
 *   {Param} - key - Google Places API key saved in .env file
 *   {Param} - location - Latitude and longitude are deconstructed from request query.
@@ -179,6 +179,37 @@ router.get('/bars', (req, res) => {
     .catch((err) => {
       throw err;
     });
+});
+
+/*
+* route - returns requested place detail information when given id number
+* {Param} - id - deconstructed from req.params
+* returns - object containing detailed information of a Google Place information from API
+*/
+router.get('/place/:id', (req, res) => {
+  console.log(req.query, req.params);
+  debugger;
+  const { id } = req.query;
+  const idT = req.params.id;
+  // axios({
+  //   method: 'GET',
+  //   url: 'https://maps.googleapis.com/maps/api/place/details/json?',
+  //   headers: {
+  //     'content-type': 'application/json; charset=UTF-8',
+  //   },
+  //   params: {
+  //     key: process.env.GOOGLE_MAPS_API_KEY,
+  //     id: `id`,
+  //   },
+  // })
+  //   .then((response) => {
+  //     console.log(response.data.results);
+  //     const restaurantDataArray = cleanGooglePlaceDetailData(response.data.results);
+  //     res.send(restaurantDataArray);
+  //   })
+  //   .catch((err) => {
+  //     throw err;
+  //   });
 });
 
 /* POST Request Handlers */

@@ -41,7 +41,7 @@ const MapWithASearchBox = React.memo(() => {
   const [displayBars, setDisplayBars] = useState(false);
   // const [barsToken, setBarsToken] = useState(null);
   // const [nearbyTypesSelected, setNearbyTypesSelected] = useState([]);
-  // const [establishments, setEstablishments] = useState(null);
+  // const [establishments, setEstablishments] = useState(null);git 
   // *** LZ - end
 
   const addPlace = (place) => {
@@ -447,79 +447,75 @@ const MapWithASearchBox = React.memo(() => {
               lng={restaurant.lng}
               clickHandler={() => {
                 if (selectedRestaurant && selectedRestaurant.id === restaurant.id) {
-                  console.log("***ID matches so cleared selected");
                   setSelectedRestaurant(null);
                 } else {
-                  console.log("***ID doesn't matches so set selected");
                   setSelectedRestaurant(restaurant);
                 }
               }}
             />
           ))}
 
-          {selectedRestaurant && (
-            <PlaceInfoWindow
-              selectedRestaurant={selectedRestaurant}
-              onCloseClick={() => {
-                setSelectedRestaurant(null);
-              }}
-              position={{
-                lat: +selectedRestaurant.lat,
-                lng: +selectedRestaurant.lng,
-              }}
-            >
-              <div>
-                <Link to={`/restaurant/${selectedRestaurant.id}`} activeclassname="active">
-                  <h2>{selectedRestaurant.name}</h2>
-                </Link>
-                <p>{selectedRestaurant.vicinity}</p>
-                <p>{selectedRestaurant.types}</p>
-                <p>Rating: {selectedRestaurant.rating}</p>
-              </div>
-            </PlaceInfoWindow>
-          )}
+        {selectedRestaurant && (
+          <PlaceInfoWindow
+            selectedPlace={selectedRestaurant}
+            onCloseClick={() => {
+              setSelectedRestaurant(null);
+            }}
+            position={{
+              lat: +selectedRestaurant.lat,
+              lng: +selectedRestaurant.lng,
+            }}
+          >
+            <div>
+              <Link to={`/place/${selectedRestaurant.id}`} activeclassname="active">
+                <h2>{selectedRestaurant.name}</h2>
+              </Link>
+              <p>{selectedRestaurant.vicinity}</p>
+              <p>{selectedRestaurant.types}</p>
+              <p>Rating: {selectedRestaurant.rating}</p>
+            </div>
+          </PlaceInfoWindow>
+        )}
 
-          {!isEmpty(bars) && displayBars &&
-          bars.map((bar) => (
-            <Marker
-              color={'drink'}
-              key={bar.id}
-              text={bar.name}
-              size={28}
-              lat={bar.lat}
-              lng={bar.lng}
-              clickHandler={() => {
-                if (selectedBar && selectedBar.id === bar.id) {
-                  console.log("***ID matches so cleared selected");
-                  setSelectedBar(null);
-                } else {
-                  console.log("***ID doesn't matches so set selected");
-                  setSelectedBar(bar);
-                }
-              }}
-            />
-          ))}
-
-          {selectedBar && (
-            <PlaceInfoWindow
-              selectedBar={selectedBar}
-              onCloseClick={() => {
+        {!isEmpty(bars) && displayBars &&
+        bars.map((bar) => (
+          <Marker
+            color={'drink'}
+            key={bar.id}
+            text={bar.name}
+            size={28}
+            lat={bar.lat}
+            lng={bar.lng}
+            clickHandler={() => {
+              if (selectedBar && selectedBar.id === bar.id) {
                 setSelectedBar(null);
-              }}
-              position={{
-                lat: +selectedBar.lat,
-                lng: +selectedBar.lng,
-              }}
-            >
-              <div>
-                <Link to={`/bar/${selectedBar.id}`} activeclassname="active">
-                  <h2>{selectedBar.name}</h2>
-                </Link>
-                <p>{selectedBar.vicinity}</p>
-                <p>Rating: {selectedBar.rating}</p>
-              </div>
-            </PlaceInfoWindow>
-          )}
+              } else {
+                setSelectedBar(bar);
+              }
+            }}
+          />
+        ))}
+
+        {selectedBar && (
+          <PlaceInfoWindow
+            selectedPlace={selectedBar}
+            onCloseClick={() => {
+              setSelectedBar(null);
+            }}
+            position={{
+              lat: +selectedBar.lat,
+              lng: +selectedBar.lng,
+            }}
+          >
+            <div>
+              <Link to={`/place/${selectedBar.id}`} activeclassname="active">
+                <h2>{selectedBar.name}</h2>
+              </Link>
+              <p>{selectedBar.vicinity}</p>
+              <p>Rating: {selectedBar.rating}</p>
+            </div>
+          </PlaceInfoWindow>
+        )}
           
       </GoogleMap>
     </>

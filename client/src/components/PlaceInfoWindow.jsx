@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { OverlayTrigger, Popover, Button, Image } from 'react-bootstrap';
 import styled from 'styled-components';
-import { addTrail } from '../helpers';
+// import { addTrail } from '../helpers';
 
 const LinkDiv = styled.div`
   :hover {
@@ -32,22 +32,23 @@ const PlaceInfoWindow = React.memo(({ selectedPlace, onCloseClick }) => {
     fontSize: 14,
     zIndex: 0,
   };
-  console.log(selectedPlace);
+  console.log('Window', selectedPlace);
   const clickHandler = () => {
-    const PlaceData = {
-      ...place,
-      api_id: place.id,
-      latitude: +place.lat,
-      longitude: +place.lng,
-    };
-    // addPlace(placeData)
-    //   .then((response) => {
-        console.log("Redirect to bar/restaurant");
-        setRedirect(`/place/${response.id}`);
-      // })
-      // .catch((err) => {
-      //   setRedirect('/404');
-      // });
+    console.log("Clicked");
+    // const PlaceData = {
+    //   ...place,
+    //   api_id: place.id,
+    //   latitude: +place.lat,
+    //   longitude: +place.lng,
+    // };
+    // // addPlace(placeData)
+    // //   .then((response) => {
+    //     console.log("Redirect to bar/restaurant");
+    //     setRedirect(`/place/${response.id}`);
+    //   // })
+    //   // .catch((err) => {
+    //   //   setRedirect('/404');
+    //   // });
   };
 
   return (
@@ -85,11 +86,13 @@ const PlaceInfoWindow = React.memo(({ selectedPlace, onCloseClick }) => {
                   style={{ width: '130px' }}
                 />
               </div> */}
-              {/* <div style={{ fontSize: 14, color: 'white' }}>
-                {place.address}
+              <div style={{ fontSize: 14, color: 'white' }}>
+                {place.name}
                 <br />
-                {place.phone_number}
-              </div> */}
+                {place.vicinity}
+                <br />
+                {place.open_now ? 'Currently Open' : 'Currently Closed'}
+              </div>
               {/* <div
                 className="text-truncate"
                 style={{ fontSize: 14, color: 'white', width: '14rem' }}

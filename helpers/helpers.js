@@ -39,11 +39,11 @@ const uploadImage = (file) => new Promise((resolve, reject) => {
 const authChecker = (user) => !!user;
 
 /**
- * Clean up Google Places API response.results
- * @param {Array} Google places
+ * Clean up Google Places API response.results for general info of multiple restaurants/bars
+ * @param {Array} Google Places array
  */
-const cleanGooglePlacesData = (data) => {
-  return data.map(place => {
+const cleanGooglePlacesData = (placesDataArray) => {
+  return placesDataArray.map(place => {
     const cleanPlace = {};
     // Check if needed data exists
     // If so, add to clean data object
@@ -54,7 +54,7 @@ const cleanGooglePlacesData = (data) => {
       cleanPlace.name = place.name;
     }
     if (place.vicinity) {
-      cleanPlace.address = place.vicinity;
+      cleanPlace.vicinity = place.vicinity;
     }
     if (place.opening_hours && place.opening_hours.open_now) {
       cleanPlace.open_now = place.opening_hours.open_now;
@@ -77,6 +77,61 @@ const cleanGooglePlacesData = (data) => {
     // Return clean data for Google Place
     return cleanPlace;
   });
+};
+
+/**
+ * Clean up Google Places API response.results for detailed info of a restaurant/bar
+ * @param {Object} Google Place object
+ */
+const cleanGooglePlaceDetailData = (placeDataObj) => {
+  const place = placeDataObj;
+  const cleanPlace = {};
+  // Check if needed data exists
+  // If so, add to clean data object
+  if (place.place_id) {
+    cleanPlace.id = place.place_id;
+  }
+  if (place.name) {
+    cleanPlace.name = place.name;
+  }
+  if (place.formatted_address) {
+    cleanPlace.address = place.formatted_address;
+  }
+  if (place.formatted_phone_number) {
+    cleanPlace.phone_number = place.formatted_phone_number;
+  }
+  if (place.vicinity) {
+    cleanPlace.vicinity = place.vicinity;
+  }
+  if (place.opening_hours && place.opening_hours.open_now) {
+    cleanPlace.open_now = place.opening_hours.open_now;
+  }
+  if (place.opening_hours && place.opening_hours.weekday_text) {
+    cleanPlace.weekday_text = place.opening_hours.weekday_text;
+  }
+  if (place.geometry.location.lat) {
+    cleanPlace.lat = place.geometry.location.lat;
+  }
+  if (place.geometry.location.lng) {
+    cleanPlace.lng = place.geometry.location.lng;
+  }
+  if (place.types) {
+    cleanPlace.types = place.types;
+  }
+  if (place.rating) {
+    cleanPlace.rating = place.rating;
+  }
+  if (place.icon) {
+    cleanPlace.icon = place.icon;
+  }
+  if (place.photos) {
+    cleanPlace.photos = place.photos;
+  }
+  if (place.website) {
+    cleanPlace.icon = place.website;
+  }
+  // Return clean data for Google Place
+  return cleanPlace;
 };
 
 module.exports = {
