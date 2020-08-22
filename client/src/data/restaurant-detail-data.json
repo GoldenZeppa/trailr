@@ -1,0 +1,266 @@
+{
+  "html_attributions": [],
+  "result": {
+     "address_components": [
+        {
+           "long_name": "300",
+           "short_name": "300",
+           "types": [
+              "street_number"
+           ]
+        },
+        {
+           "long_name": "Gravier Street",
+           "short_name": "Gravier St",
+           "types": [
+              "route"
+           ]
+        },
+        {
+           "long_name": "Central Business District",
+           "short_name": "Central Business District",
+           "types": [
+              "neighborhood",
+              "political"
+           ]
+        },
+        {
+           "long_name": "New Orleans",
+           "short_name": "New Orleans",
+           "types": [
+              "locality",
+              "political"
+           ]
+        },
+        {
+           "long_name": "Orleans Parish",
+           "short_name": "Orleans Parish",
+           "types": [
+              "administrative_area_level_2",
+              "political"
+           ]
+        },
+        {
+           "long_name": "Louisiana",
+           "short_name": "LA",
+           "types": [
+              "administrative_area_level_1",
+              "political"
+           ]
+        },
+        {
+           "long_name": "United States",
+           "short_name": "US",
+           "types": [
+              "country",
+              "political"
+           ]
+        },
+        {
+           "long_name": "70130",
+           "short_name": "70130",
+           "types": [
+              "postal_code"
+           ]
+        }
+     ],
+     "adr_address": "<span class=\"street-address\">300 Gravier St</span>, <span class=\"locality\">New Orleans</span>, <span class=\"region\">LA</span> <span class=\"postal-code\">70130</span>, <span class=\"country-name\">USA</span>",
+     "business_status": "OPERATIONAL",
+     "formatted_address": "300 Gravier St, New Orleans, LA 70130, USA",
+     "formatted_phone_number": "(800) 262-2662",
+     "geometry": {
+        "location": {
+           "lat": 29.9498352,
+           "lng": -90.06644299999999
+        },
+        "viewport": {
+           "northeast": {
+              "lat": 29.9510659302915,
+              "lng": -90.06497416970849
+           },
+           "southwest": {
+              "lat": 29.9483679697085,
+              "lng": -90.0676721302915
+           }
+        }
+     },
+     "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/lodging-71.png",
+     "international_phone_number": "+1 800-262-2662",
+     "name": "Windsor Court Hotel",
+     "opening_hours": {
+        "open_now": true,
+        "periods": [
+           {
+              "open": {
+                 "day": 0,
+                 "time": "0000"
+              }
+           }
+        ],
+        "weekday_text": [
+           "Monday: Open 24 hours",
+           "Tuesday: Open 24 hours",
+           "Wednesday: Open 24 hours",
+           "Thursday: Open 24 hours",
+           "Friday: Open 24 hours",
+           "Saturday: Open 24 hours",
+           "Sunday: Open 24 hours"
+        ]
+     },
+     "photos": [
+        {
+           "height": 1000,
+           "html_attributions": [
+              "<a href=\"https://maps.google.com/maps/contrib/102104411785934568577\">Windsor Court Hotel</a>"
+           ],
+           "photo_reference": "CkQ0AAAAhw2ofSRM2Vk9cIg9QX9BHKnDXOHpG0m_2WF8LCrYib_r0x-c2f9P38a-EiI-pCn2a6lpf7DbfKCAuFSlg0X_ERIQ_5UJqmsK17sGtDBVi4j2VBoUQ-ocKhIQZBHmoKgdyRJ-Pyfnj9o",
+           "width": 1500
+        },
+        {
+           "height": 2133,
+           "html_attributions": [
+              "<a href=\"https://maps.google.com/maps/contrib/102104411785934568577\">Windsor Court Hotel</a>"
+           ],
+           "photo_reference": "CkQ0AAAApptw21G7df5PrB8yFemFubEP8Rrw8xVYuUC9YslB_vlA9l_ymurDEGujq4uUXEoUeSzjsnASUOX3gDZGdr_OsBIQWnCZPHJKB1W20usCKVa_6hoULQpsFbwqhk2xXecZDVBbOO5Pyc0",
+           "width": 3200
+        },
+        {
+           "height": 720,
+           "html_attributions": [
+              "<a href=\"https://maps.google.com/maps/contrib/104786871865448007798\">Ritesh Durgapersad</a>"
+           ],
+           "photo_reference": "CkQ0AAAAXrTvSm5nRawqWioY_5w7vsZ0NZtGeXQcD3qFIFLPh9B2sGGnPVEPi4gvduvH0qLkx_CmmSsejzS6-XsYx5hywxIQCjV6Req-Wh5oz9SZsw_ckRoUF0XYTdjrc_tHjHm8pCT5V9oKLvU",
+           "width": 1280
+        },
+        {
+           "height": 1000,
+           "html_attributions": [
+              "<a href=\"https://maps.google.com/maps/contrib/102104411785934568577\">Windsor Court Hotel</a>"
+           ],
+           "photo_reference": "CkQ0AAAA4xvmwo9091ay7o1das9ne7vA8tYA3LAyRl6A0A2hNZaaw65uDGxPPPmnyGC8JSISrqJyF8KpIJ949gPsvpiLhBIQ9QZUeKSsmJtz85zKc4CuDxoUr_Zh44bADrTEMvieI3eyPLYiTRI",
+           "width": 1500
+        },
+        {
+           "height": 318,
+           "html_attributions": [
+              "<a href=\"https://maps.google.com/maps/contrib/102104411785934568577\">Windsor Court Hotel</a>"
+           ],
+           "photo_reference": "CkQ0AAAAO8aorXRQ7CntmwFW_S80e2WoumgZqEHmo9Hnk52XtqvvFmEatQYMz7vkKVcic5BREHwKvoTJZRZ1HrBJq_X-YxIQ5wBA-9X8W6EpTPykIkGP8hoU-4akP-Ed-tCBgpGbI3hGdV6F1ek",
+           "width": 980
+        },
+        {
+           "height": 4016,
+           "html_attributions": [
+              "<a href=\"https://maps.google.com/maps/contrib/102104411785934568577\">Windsor Court Hotel</a>"
+           ],
+           "photo_reference": "CkQ0AAAA13m_ykAsl-Aoj3ZtHUkEoRkLcu7QihL8uB5B8pAKVCUREPC92cppvZ-MxDGSApxd9Of3fL8Tf-xSW3PoqjJ16RIQ4bbNKJHqQvfrtCN7MmZbLBoUVsouBA1eyLtg2V5RJhj0D_Icpc4",
+           "width": 6016
+        },
+        {
+           "height": 605,
+           "html_attributions": [
+              "<a href=\"https://maps.google.com/maps/contrib/102104411785934568577\">Windsor Court Hotel</a>"
+           ],
+           "photo_reference": "CkQ0AAAAhE4M6Och3SNsugL6TNadYYz2G-TgTmZ03Pztrd6IbUDC0pe_w2SggcZ4t9Kim-i2md4g759Az3-LS0ZDdRXrZBIQypleTBQk7ayZkUbLj_OvphoU7PysOacimwPgUR7zfOvL3YCAMME",
+           "width": 1080
+        },
+        {
+           "height": 1000,
+           "html_attributions": [
+              "<a href=\"https://maps.google.com/maps/contrib/102104411785934568577\">Windsor Court Hotel</a>"
+           ],
+           "photo_reference": "CkQ0AAAAlY1h7tKC9rsvbGriRixtg__2iD7BCeAORWz8I-507dGZQRL3xYkU8YUO22841KlcKmLM4t0r4tVAezi35cPkRxIQHlDxJyNnKEEV7PmKTngEgBoUtkaiIEp2A0N8cwvYqDzkyFo4xm0",
+           "width": 1500
+        },
+        {
+           "height": 2988,
+           "html_attributions": [
+              "<a href=\"https://maps.google.com/maps/contrib/108706570439048748212\">Terri Emmett</a>"
+           ],
+           "photo_reference": "CkQ0AAAA9b2e2abJLeQ2WmJegBNgFpwO8goNbfZCwswyTCni1EogBMcyQtf-2kwWD3yZqqwNdSdWfklimhiqZ9VkC86OZxIQnPh9pQZybW8hZKXKxhqUNxoUcR443fX3MRBk3HRz_BXlreRtxlA",
+           "width": 5312
+        },
+        {
+           "height": 3024,
+           "html_attributions": [
+              "<a href=\"https://maps.google.com/maps/contrib/100346236183849820119\">Joshua Ward</a>"
+           ],
+           "photo_reference": "CkQ0AAAAOveZIR6KNjHrc27QJKPowo1bzefAM1FFX6Xwu_z9TTc2S3-3NSMoXaDWxSCrJYAJU-Kti5xNa2xOBEt7UMLflBIQ-awmIAmgSXbN41kLFiJfDRoUe9ZyLEQFD4j2cuLLp8j_r-UNKAY",
+           "width": 4032
+        }
+     ],
+     "place_id": "ChIJPwv3u3KmIIYRLmJLwBqo4o8",
+     "plus_code": {
+        "compound_code": "WWXM+WC New Orleans, LA, USA",
+        "global_code": "76XFWWXM+WC"
+     },
+     "rating": 4.7,
+     "reference": "ChIJPwv3u3KmIIYRLmJLwBqo4o8",
+     "reviews": [
+        {
+           "author_name": "Tina Weaver",
+           "author_url": "https://www.google.com/maps/contrib/114081508299099549234/reviews",
+           "language": "en",
+           "profile_photo_url": "https://lh3.googleusercontent.com/a-/AOh14GhtDBbH9C7xYQP-T9o9fAMa2cdx3W7wUkpid40T=s128-c0x00000000-cc-rp-mo",
+           "rating": 5,
+           "relative_time_description": "a month ago",
+           "text": "Just stayed here for my sister's 40th!  Please please give this property your business!  I could not have been happier!  The staff is top-notch!  The rooms are clean and opulent!  Our room was so fancy, had a great view!  I cannot say enough good things!  The bell hop, valet and check in personnel were simply A-M-A-Z-I-N-G!!!!",
+           "time": 1594058335
+        },
+        {
+           "author_name": "Jody Newell",
+           "author_url": "https://www.google.com/maps/contrib/116300593099695028859/reviews",
+           "language": "en",
+           "profile_photo_url": "https://lh3.googleusercontent.com/a-/AOh14GjnEtv9bOhdS-XMTxEVR47WwT7um-o6NkGUFOx9XA=s128-c0x00000000-cc-rp-mo-ba4",
+           "rating": 5,
+           "relative_time_description": "a month ago",
+           "text": "Without a doubt the best hotel we've ever stayed.  We loved everything about our stay.  The room was roomy and lovely.  The bed was so comfortable.  The breakfast the next morning was awesome.  We will be back.",
+           "time": 1592954625
+        },
+        {
+           "author_name": "Kevin Collard",
+           "author_url": "https://www.google.com/maps/contrib/116108070570267282225/reviews",
+           "language": "en",
+           "profile_photo_url": "https://lh4.googleusercontent.com/-HMWc1DVL3mE/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuckrM5RWBGP4OrQMvqpKgGaaB0aN3Q/s128-c0x00000000-cc-rp-mo/photo.jpg",
+           "rating": 5,
+           "relative_time_description": "2 weeks ago",
+           "text": "Great hotel.  Great service. Great people.  Great location. Whatever we needed they we eager to help.  Vincent went above and beyond to make sure our stay was comfortable.  Definitely recommend this beautiful hotel.",
+           "time": 1596585631
+        },
+        {
+           "author_name": "thebobnessable",
+           "author_url": "https://www.google.com/maps/contrib/113573921718369438129/reviews",
+           "language": "en",
+           "profile_photo_url": "https://lh3.googleusercontent.com/a-/AOh14GggbCjqvv-bWFkPnuUOUyIbI2BaGYZDuP3IWOWIRw=s128-c0x00000000-cc-rp-mo",
+           "rating": 5,
+           "relative_time_description": "a month ago",
+           "text": "You get what you pay for. The staff is so friendly, they go out of their way for you. Rooms and beds are comfortable. Great view of the water if you get that side of the hotel. This will be my hotel every time I come to NOLA.",
+           "time": 1593786982
+        },
+        {
+           "author_name": "Priscilla Harley Gordon",
+           "author_url": "https://www.google.com/maps/contrib/115873656265465933427/reviews",
+           "language": "en",
+           "profile_photo_url": "https://lh3.googleusercontent.com/a-/AOh14GgaN6tLFixCxjNZUeEocoznz45x0laHyLtwXwde=s128-c0x00000000-cc-rp-mo",
+           "rating": 5,
+           "relative_time_description": "2 weeks ago",
+           "text": "I love it .The lunch menu is still $20.Choice of protein, I had grilled Redfish and my husband had short ribs. The portions are small but comes with your choice  of 3 yummy sides.I liked the Brussel sprouts  , crayfish pasta and tomato salad.All in a elegant atmosphere.",
+           "time": 1596839874
+        }
+     ],
+     "types": [
+        "lodging",
+        "bar",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+     ],
+     "url": "https://maps.google.com/?cid=10368034125009084974",
+     "user_ratings_total": 998,
+     "utc_offset": -300,
+     "vicinity": "300 Gravier Street, New Orleans",
+     "website": "https://www.windsorcourthotel.com/"
+  },
+  "status": "OK"
+}

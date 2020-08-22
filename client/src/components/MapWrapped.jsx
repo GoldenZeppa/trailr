@@ -481,7 +481,7 @@ const MapWithASearchBox = React.memo(() => {
           {!isEmpty(bars) && displayBars &&
           bars.map((bar) => (
             <Marker
-              color={'food'}
+              color={'drink'}
               key={bar.id}
               text={bar.name}
               size={28}
