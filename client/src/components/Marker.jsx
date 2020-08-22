@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import redMarker from '../../assets/imgs/redMarker.png';
 import greenMarker from '../../assets/imgs/greenMarker.png';
 import blueMarker from '../../assets/imgs/blueMarker.png';
+import restaurantMarker from '../../assets/imgs/restaurantMarker.png';
 
 /** Marker Component for Google Map, don't worry about the $hover
  *   it is automatically handled. Only needs a lat, lng, and a clickHandler
@@ -18,6 +19,7 @@ const marker = ({
 }) => {
   let icon;
   switch (color) {
+    case 'food': icon = restaurantMarker; break;
     case 'green': icon = greenMarker; break;
     case 'blue': icon = blueMarker; break;
     case 'red': default: icon = redMarker;
@@ -48,6 +50,6 @@ export default marker;
 
 marker.propTypes = {
   clickHandler: PropTypes.func.isRequired,
-  color: PropTypes.oneOf(['green', 'blue', 'red']),
+  color: PropTypes.oneOf(['green', 'blue', 'red', 'food']),
   size: PropTypes.number,
 };
