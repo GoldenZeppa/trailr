@@ -21,6 +21,7 @@ const header = ({ user }) => (
             <Link to={`/user/${user.id}`} className="nav-item nav-link">
               My Profile
             </Link>
+            <Nav.Link href="/forecast">Weathr </Nav.Link>
             <Nav.Link href="/auth/logout">Signout</Nav.Link>
           </>
         ) : (

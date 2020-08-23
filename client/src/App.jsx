@@ -12,6 +12,7 @@ import Login from './components/Login.jsx';
 import NoMatchPage from './components/NoMatchPage.jsx';
 import HeaderImage from './components/HeaderImage.jsx';
 import BirdWatcher from './components/BirdWatcher.jsx';
+import Forecast from './components/Forecast.jsx';
 
 // Logged out state
 const loggedOut = { loggedIn: false };
@@ -45,6 +46,9 @@ const app = () => {
           <Switch>
             <Route path="/birdwatcher">
               <BirdWatcher />
+            </Route>
+            <Route path="/forecast">
+              <Forecast />
             </Route>
             <Route path="/trail/:id">
               <Trail user={user} />
